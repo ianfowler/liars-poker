@@ -25,7 +25,9 @@ const PlayerCard = ({
 
   const onSaveName = () => {
     if (currentEditedName.length === 0) return;
+    console.log("before");
     onNameChange(currentEditedName);
+    console.log("after");
     setIsEditingName(false);
   };
 
@@ -33,7 +35,7 @@ const PlayerCard = ({
     <div
       className={`${className} w-52 col-span-4 md:col-span-3 row-span-3 bg-slate-400
           rounded-md flex flex-col p-2 items-center 
-          ${isUser ? "shadow-inner shadow-sky-100  shadow-spread-2" : ""} 
+          ${isUser ? "shadow-inner shadow-sky-50  shadow-spread-8" : ""} 
           border-slate-500 border hover:border-slate-400`}
     >
       {isUser && isEditingName ? (

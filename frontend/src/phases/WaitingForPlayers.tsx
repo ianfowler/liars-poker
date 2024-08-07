@@ -1,5 +1,17 @@
+import { useContext } from "react";
 import { Stepper } from "../components/Stepper";
 import { GameMetaState } from "../types";
+import { SocketContext } from "../App";
+import {
+  sioChangeNumCards,
+  sioChangeNumWilds,
+  sioSetNickname,
+  sioStartGame,
+} from "../socketActions";
+import { PlayingCard } from "../components/PlayingCard";
+import { PlayerCard } from "../components/PlayerCard";
+import { useNickname } from "../hooks/useNickname";
+import { useUserId } from "../hooks/useUserId";
 
 const WaitingForPlayers = ({
   className,
@@ -8,6 +20,23 @@ const WaitingForPlayers = ({
   gameMetaState: GameMetaState;
   className?: string;
 }) => {
+  const socket = useContext(SocketContext);
+  const { setNickname } = useNickname();
+  const userId = useUserId();
+
+  const cardsUsed = gameMetaState
+    ? gameMetaState.numInitCards * gameMetaState.playerIds.length
+    : 0;
+
+  const maxCards = 48 + (gameMetaState ? gameMetaState.numWilds : 0);
+
+  const usingOkNumCards = cardsUsed <= maxCards;
+
+  const canStartGame =
+    gameMetaState &&
+    cardsUsed <= maxCards &&
+    gameMetaState.playerIds.length > 1;
+
   return (
     <div className={`${className}`}>
       <div className="text-slate-200 flex gap-16">
@@ -17,8 +46,8 @@ const WaitingForPlayers = ({
             value={gameMetaState.numInitCards}
             minValue={1}
             maxValue={10}
-            onChange={(newValue: number) => {
-              socket.emit("CHANGE_NUM_CARDS", newValue);
+            onChange={(numCards: number) => {
+              sioChangeNumCards({ socket, numCards });
             }}
           />
           <div className="flex flex-wrap gap-2">
@@ -35,8 +64,8 @@ const WaitingForPlayers = ({
             value={gameMetaState.numWilds}
             minValue={0}
             maxValue={10}
-            onChange={(newValue: number) => {
-              socket.emit("CHANGE_NUM_WILDS", newValue);
+            onChange={(numWilds: number) => {
+              sioChangeNumWilds({ socket, numWilds });
             }}
           />
           <div className="flex flex-wrap gap-2">
@@ -61,8 +90,11 @@ const WaitingForPlayers = ({
             key={index}
             numCards={gameMetaState.numInitCards}
             onNameChange={(name) => {
-              console.log("gonna emit ", userId, name);
-              socket.emit("SET_NICKNAME", userId, name);
+              console.error("test");
+              console.log("test");
+              console.error("test");
+              console.log("Socket nickname change " + name);
+              sioSetNickname({ socket, userId, name });
               setNickname(name);
             }}
             isUser={playerId === userId}
@@ -76,7 +108,7 @@ const WaitingForPlayers = ({
      disabled:bg-slate-600 disabled:border-slate-400 disabled:text-slate-400"
         disabled={!canStartGame}
         onClick={() => {
-          socket.emit("START_GAME");
+          sioStartGame({ socket });
         }}
       >
         Start Game
@@ -84,3 +116,5 @@ const WaitingForPlayers = ({
     </div>
   );
 };
+
+export { WaitingForPlayers };
