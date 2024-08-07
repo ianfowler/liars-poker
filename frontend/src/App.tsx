@@ -3,15 +3,13 @@ import "./App.css";
 import { io, Socket } from "socket.io-client";
 import { Container } from "./components/Container";
 import { Header } from "./components/Header";
-import { PlayerCard } from "./components/PlayerCard";
 import { PlayingCard } from "./components/PlayingCard";
 import { GameMetaState, GamePhase } from "./types";
 import { useNickname } from "./hooks/useNickname";
 import { useUserId } from "./hooks/useUserId";
-import _ from "underscore";
-import { MoveInput } from "./components/MoveInput";
 import { sioJoinGame } from "./socketActions";
 import { WaitingForPlayers } from "./phases/WaitingForPlayers";
+import { PlayingHand } from "./phases/PlayingHand";
 
 const TOP_SECRET_AUTH_TOKEN = "jiggities";
 const SOCKET_URL = "http://localhost:2100";
@@ -72,20 +70,10 @@ function App() {
             className="flex flex-col gap-4 pt-4 items-center"
           />
         ) : gameMetaState.phase === GamePhase.PlayingHand ? (
-          <>
-            <div className="flex flex-wrap justify-center py-6 gap-4 ">
-              {gameMetaState.playerIds.map((playerId, index) => (
-                <PlayerCard
-                  key={index}
-                  numCards={3}
-                  onNameChange={() => {}}
-                  isUser={playerId === userId}
-                  alias={gameMetaState.idToNickname[playerId]}
-                />
-              ))}
-            </div>
-            <MoveInput isPlayersTurn={false} aliasCurrentPlayer={"asdf"} />
-          </>
+          <PlayingHand
+            gameMetaState={gameMetaState}
+            className="flex flex-col gap-4 pt-4 items-center"
+          />
         ) : gameMetaState.phase === GamePhase.Showdown ? (
           <></>
         ) : (
