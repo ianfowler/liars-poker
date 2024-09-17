@@ -15,7 +15,14 @@ const PlayingHand = ({
   const socket = useContext(SocketContext);
   const userId = useUserId();
 
-  const namedHands = gameMetaState.gameState?.namedHandActions;
+  const gameState = gameMetaState.gameState;
+  const namedHands = gameState?.namedHandActions;
+  const numNamedHands = namedHands?.length || 0;
+  const userIdx = gameMetaState.playerIds.indexOf(userId);
+  const numPlayers = gameMetaState.playerIds.length;
+  const currTurnIdx = numNamedHands % numPlayers;
+  const isUsersTurn = userIdx === currTurnIdx;
+  const currentPlayerAlias = gameMetaState.idToNickname[currTurnIdx];
 
   return (
     <div className={`${className}`}>
@@ -30,7 +37,10 @@ const PlayingHand = ({
           />
         ))}
       </div>
-      <MoveInput isPlayersTurn={false} aliasCurrentPlayer={"asdf"} />
+      <MoveInput
+        isUsersTurn={isUsersTurn}
+        currentPlayerAlias={currentPlayerAlias}
+      />
     </div>
   );
 };

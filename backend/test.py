@@ -1,5 +1,5 @@
 from player import Player
-from game_round import GameRound
+from backend.legacy.game_round import GameRound
 
 term_p1, term_p2 = Player("p1"), Player("p2")
 game = GameRound(

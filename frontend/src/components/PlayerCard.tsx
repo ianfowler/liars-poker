@@ -9,12 +9,10 @@ const PlayerCard = ({
   hand,
   namedActions = [],
   isUser,
-  onNameChange,
 }: {
   alias: string;
   numCards: number;
   isUser: boolean;
-  onNameChange: (name: string) => void;
   active?: boolean;
   className?: string;
   hand?: string[];
@@ -23,11 +21,13 @@ const PlayerCard = ({
   const [isEditingName, setIsEditingName] = useState(false);
   const [currentEditedName, setCurrentEditedName] = useState(alias);
 
+  const onNameChange = (name: string) => {
+    
+  }
+
   const onSaveName = () => {
     if (currentEditedName.length === 0) return;
-    console.log("before");
     onNameChange(currentEditedName);
-    console.log("after");
     setIsEditingName(false);
   };
 

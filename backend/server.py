@@ -5,7 +5,6 @@ import concurrent.futures
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from dataclasses import dataclass, asdict
-from player import WebClientPlayer
 from common import GameState
 from enum import Enum
 

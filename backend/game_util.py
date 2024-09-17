@@ -50,16 +50,3 @@ def handle_challenge(state: GameState, communal_cards: Counter) -> ChallengeOutc
         challenger_idx=num_actions % num_players,
         challenger_won=_check_call() if state.terminal_action == CALL else _check_best()
     )
-
-
-def _call_is_correct(self, last_hand: NamedHand) -> bool:
-    return last_hand.quantity > self.dealt_cards[last_hand.card] \
-        + self.dealt_cards[WILD_CARD]
-
-
-def _best_is_correct(self, last_hand: NamedHand) -> bool:
-    num_wilds = self.dealt_cards[WILD_CARD]
-    spot = max(NamedHand(card=card, quantity=quantity + num_wilds)
-               for card, quantity in self.dealt_cards.items()
-               if card != WILD_CARD)
-    return last_hand == spot

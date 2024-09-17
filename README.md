@@ -2,7 +2,7 @@
 
 ## Backend
 
-`cd backend && python3.11 server-test.py`
+`cd backend && python3.11 server.py`
 
 ## Frontend
 

@@ -90,10 +90,6 @@ const WaitingForPlayers = ({
             key={index}
             numCards={gameMetaState.numInitCards}
             onNameChange={(name) => {
-              console.error("test");
-              console.log("test");
-              console.error("test");
-              console.log("Socket nickname change " + name);
               sioSetNickname({ socket, userId, name });
               setNickname(name);
             }}
