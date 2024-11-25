@@ -1,5 +1,5 @@
 import pytest
-from backend.common import NamedHand
+from api.common import NamedHand
 
 
 @pytest.mark.parametrize("named_hand, n, expected_hand", [

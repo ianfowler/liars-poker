@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Union, Literal
 from functools import total_ordering
+from typing import List, Literal, Union
 
 Card = Literal["W", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 

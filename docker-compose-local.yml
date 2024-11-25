@@ -1,0 +1,54 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.2
+    command:
+      - --entrypoints.web.address=:80
+      - --providers.docker=true
+      - --api=true
+      - --accesslog=true
+    labels:
+      - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.service=api@internal
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      FLASK_ENV: ${FLASK_ENV} 
+      API_PORT: ${API_PORT}
+    volumes:
+      - ./api:/api
+      - ./config:/config:ro
+    working_dir: /api
+    labels:
+      - traefik.http.routers.api.rule=Host(`api.${DOMAIN}`)
+      - traefik.http.routers.api.entrypoints=web
+      - traefik.http.services.api.loadbalancer.server.port=${API_PORT}
+    networks:
+      - proxy 
+    restart: unless-stopped
+
+  frontend:
+    image: nginx:stable
+    volumes:
+      - ./frontend/build:/usr/share/nginx/html:ro
+    labels:
+      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.frontend.entrypoints=web
+    networks:
+      - proxy
+    restart: unless-stopped
+
+networks:
+  proxy:
+    driver: bridge
+

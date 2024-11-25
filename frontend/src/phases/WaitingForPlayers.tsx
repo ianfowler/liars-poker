@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Stepper } from "../components/Stepper";
 import { GameMetaState } from "../types";
-import { SocketContext } from "../App";
 import {
   sioChangeNumCards,
   sioChangeNumWilds,
@@ -20,7 +19,6 @@ const WaitingForPlayers = ({
   gameMetaState: GameMetaState;
   className?: string;
 }) => {
-  const socket = useContext(SocketContext);
   const { setNickname } = useNickname();
   const userId = useUserId();
 
@@ -47,7 +45,7 @@ const WaitingForPlayers = ({
             minValue={1}
             maxValue={10}
             onChange={(numCards: number) => {
-              sioChangeNumCards({ socket, numCards });
+              console.log(`Changed to ${numCards} cards`)
             }}
           />
           <div className="flex flex-wrap gap-2">
@@ -65,7 +63,7 @@ const WaitingForPlayers = ({
             minValue={0}
             maxValue={10}
             onChange={(numWilds: number) => {
-              sioChangeNumWilds({ socket, numWilds });
+              console.log(`num wilds changed to ${numWilds}`);
             }}
           />
           <div className="flex flex-wrap gap-2">
@@ -89,10 +87,6 @@ const WaitingForPlayers = ({
           <PlayerCard
             key={index}
             numCards={gameMetaState.numInitCards}
-            onNameChange={(name) => {
-              sioSetNickname({ socket, userId, name });
-              setNickname(name);
-            }}
             isUser={playerId === userId}
             alias={gameMetaState.idToNickname[playerId]}
           />
@@ -104,7 +98,7 @@ const WaitingForPlayers = ({
      disabled:bg-slate-600 disabled:border-slate-400 disabled:text-slate-400"
         disabled={!canStartGame}
         onClick={() => {
-          sioStartGame({ socket });
+          console.log("Should start game")
         }}
       >
         Start Game
