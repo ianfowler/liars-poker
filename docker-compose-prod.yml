@@ -21,7 +21,7 @@ services:
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls=true
       - traefik.http.routers.traefik.tls.certresolver=${CERT_RESOLVER}
-      - traefik.http.middlewares.auth.basicauth.users=admin:$2y$12$BE.SMu4OHSgeHz3VLggwyuitNRzRTSWD2DeYU5JgrDATG.D1qogB6
+      - traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$12$$BE.SMu4OHSgeHz3VLggwyuitNRzRTSWD2DeYU5JgrDATG.D1qogB6
     ports:
       - 80:80
       - 443:443
