@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+# /build -- server is slow so build locally
 
 # misc
 .DS_Store
