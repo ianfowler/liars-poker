@@ -25,29 +25,31 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    <script src="https://webfunnel.spidrdesign.com/plugin.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="spidr-embed-trivia"></div>
-    <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function () { 
-       new SpidrWebFunnel({
-             container: document.getElementById("spidr-embed-trivia"),
-             embedId: "trivia"
-         }).create();
-       });
-    </script>
 
-    <div id="spidr-embed-trivia-blue"></div>
+    <script src="https://webfunnel.spidrdesign.com/plugin.js"></script>
     <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function () { 
-       new SpidrWebFunnel({
-             container: document.getElementById("spidr-embed-trivia-blue"),
-             embedId: "trivia-blue"
-         }).create();
-       });
+      document.addEventListener("DOMContentLoaded", function () {
+        new SpidrWebFunnel({
+          container: document.getElementById("spidr-embed-trivia"),
+          embedId: "trivia"
+        }).create();
+      });
     </script>
+    <div id="spidr-embed-trivia"></div>
+
+    <script src="https://webfunnel.spidrdesign.com/plugin.js"></script>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        new SpidrWebFunnel({
+          container: document.getElementById("spidr-embed-trivia-blue"),
+          embedId: "trivia-blue"
+        }).create();
+      });
+    </script>
+    <div id="spidr-embed-trivia-blue"></div>
 
     <div id="liars-poker"></div>
     <!--
