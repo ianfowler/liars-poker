@@ -43,7 +43,7 @@ services:
     volumes:
       - ./api:/api
     labels:
-      - traefik.http.routers.api.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.api.rule=Host(`api.${DOMAIN}`)
       - traefik.http.routers.api.entrypoints=websecure
       - traefik.http.routers.api.tls=true
       - traefik.http.routers.api.tls.certresolver=${CERT_RESOLVER}
