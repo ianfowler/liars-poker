@@ -34,10 +34,19 @@
          }).create();
        });
     </script>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () { 
+       new SpidrWebFunnel({
+             container: document.getElementById("spidr-embed-trivia-blue"),
+             embedId: "trivia-blue"
+         }).create();
+       });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="spidr-embed-trivia"></div>
+    <div id="spidr-embed-trivia-blue"></div>
     <div id="liars-poker"></div>
     <!--
       This HTML file is a template.
